@@ -1,136 +1,79 @@
-# README --> ctrlfleet-backend
+# CtrlFleet-BackEnd
+## Descripción
+CtrlFleet es un sistema de gestión de flotas robusto y fácil de usar, construido con las últimas versiones de Ruby on Rails y Angular. Permite administrar vehículos, conductores, mantenimientos y más, a través de una interfaz intuitiva y completa. Este repositorio corresponde al backend de la aplicación, que expone una API RESTful para ser consumida por el frontend.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+##Funcionalidades Principales
+- Autenticación y Autorización: Sistema de autenticación de usuarios basado en tokens utilizando Doorkeeper, con un sistema de permisos y roles a través de CanCanCan.
+- Gestión de Vehículos: Permite agregar, editar y eliminar vehículos de la flota, así como visualizar información detallada de cada uno.
+- Gestión de Conductores: Ofrece la posibilidad de administrar los conductores y asignarlos a los vehículos correspondientes.
+- Seguimiento de Mantenimiento: Lleva un registro del historial de mantenimiento de los vehículos.
+- Registro de Combustible: Permite registrar las cargas de combustible y los gastos asociados.
+- Monitoreo de combustible: Proporciona datos para visualizar gráficos y estadísticas sobre el consumo de combustible.
+- Generación de Reportes: Ofrece la capacidad de generar reportes sobre el uso de los vehículos y otros datos relevantes.
+- Gestión de Flotas: Permite crear, modificar y eliminar flotas.
+- Administración de Tipos: Permite gestionar los diferentes tipos de vehículos, combustibles y unidades de medida.
+- Gestión de Estaciones de Servicio y Depósitos: Ofrece la posibilidad de administrar las estaciones de servicio y los depósitos de la empresa.
+- Seguridad y Permisos: Permite administrar usuarios, tipos de usuario y perfiles de permisos.
 
-Things you may want to cover:
+## Tecnologías Utilizadas
+- Ruby on Rails 7.1: El framework principal utilizado para construir la API.
+- Ruby 3.2.2: El lenguaje de programación principal.
+- PostgreSQL: Como base de datos.
+- Doorkeeper: Para la autenticación de usuarios mediante OAuth 2.
+- CanCanCan: Para la gestión de roles y permisos.
+- Devise: Para la autenticación de usuarios.
+- RSpec: Para la realización de pruebas unitarias.
+- Docker: Para la contenerización de la aplicación.
 
-## Ruby version
+## Cómo Empezar
+Para empezar a utilizar CtrlFleet-BackEnd, sigue los siguientes pasos:
 
-3.2.2
-
-## Configuration
-
-### Local
-
-Instrucciones para levantar el proyecto en local
-
-1. Instalar ruby y rails (con rvm -> https://rvm.io/rvm/install)
-
-- Run:
-
-  ```ruby
-  $ rvm list
-  => ruby-3.2.2 [ arm64 ]
-
-  $ rails -v
-  Rails 7.0.5
-
-  $ ruby -v
-  ruby 2.7.6p219
-  ```
-
-2. Instalar postgres (https://computingforgeeks.com/how-to-install-postgresql-13-on-ubuntu/)
-
-- Run:
-
-  ```ruby
-  $ postgres --version
-  postgres (PostgreSQL) 13.10
-  ```
-
-3. Instalar Docker (https://docs.docker.com/engine/install/ubuntu/)
-
-- Run:
-
-  ```ruby
-  $ docker -v
-  Docker version 24.0.2, build cb74dfc
-
-  $ docker compose version
-  Docker Compose version v2.19.1
-  ```
-
-4. Levantar el proyecto
-
-- Run:
-  ```ruby
-  $ rails server
-  ```
-
-5. Para hacer Debugging
-
-```ruby
-  binding.break
+### Configuración Local
+- Clona el repositorio:
+```
+git clone https://github.com/augustocomeglio/ctrlfleet-backend.git
+```
+- Instala las dependencias:
+```
+bundle install
+```
+- Prepara la base de datos:
+```
+rails db:create
+rails db:migrate
+rails db:seed
+```
+- Inicia el servidor:
+```
+rails server
+```
+- Con Docker Construye y levanta los contenedores:
+```
+docker-compose up --build
+```
+Prepara la base de datos:
+```
+docker-compose run web bundle exec rails db:migrate
+docker-compose run web bundle exec rails db:seed
 ```
 
-### Docker
+## Estructura del Proyecto
+El proyecto sigue la estructura estándar de una aplicación de Ruby on Rails, con las siguientes carpetas principales:
+- app/controllers: Contiene los controladores que manejan las peticiones de la API.
+- app/models: Contiene los modelos que representan los datos de la aplicación.
+- config/routes.rb: Define las rutas de la API.
+- db/migrate: Contiene las migraciones de la base de datos.
+- spec/: Contiene las pruebas de la aplicación.
 
-Instrucciones para levantar el proyecto con Docker
+## Endpoints de la API
+La API expone los siguientes endpoints principales:
+- POST /oauth/token: Autenticación de usuarios.
+- GET, POST /api/v1/brands: Gestión de marcas de vehículos.
+- GET, POST, PUT, DELETE /api/v1/fleets: Gestión de flotas.
+- GET, POST, PUT, DELETE /api/v1/vehicles: Gestión de vehículos.
+- GET, POST, PUT, DELETE /api/v1/fuel_records: Gestión de registros de combustible.
+- GET, POST, PUT, DELETE /api/v1/users: Gestión de usuarios.
+Y muchos más para la gestión de tipos de vehículos, tipos de combustible, etc.
 
-1. Instalar Docker Desktop
-
-2. Generar contenedores del proyecto
-
-En terminal ejecutar uno de los siguientes comandos
-
-```ruby
-$ docker-compose up --build # Ejecuta el build y el run, dejando los logs de docker abiertos
-$ docker-compose up -d      # Ejecuta el build y el run en background
-```
-
-Luego de tener los contendores corriendo y en ejecucion, en una terminal de comando debo ejecutar
-
-```ruby
-$ docker-compose run web bundle exec rails db:migrate
-$ docker-compose run web bundle exec rails db:seed
-```
-
-En caso de necesitar ejecutar comando o queries rails, podemos abrir una consola de rails usando
-
-```ruby
-$ docker-compose run web bundle exec rails console
-```
-
-Reestablecer la base de datos
-
-```ruby
-$ docker-compose run web bundle exec rails db:drop
-$ docker-compose run web bundle exec rails db:create
-$ docker-compose run web bundle exec rails db:migrate
-$ docker-compose run web bundle exec rails db:seed
-```
-
-### PostgreSQL
-
-- Database creation
-  Run:
-
-```ruby
-  $ rails db:create
-  $ rails db:migrate
-```
-
-- Database initialization
-
-```ruby
-  $ rails db:seed
-```
-
-### Test
-
-- Como correr los test unitarios en entorno local
-  Run:
-
-```ruby
-  $ bundle exec rspec spec
-  # spec es la carpeta que contiene los tests, podemos correr toda la carpeta o el test particular que necesitemos probar
-```
-
-- Como correr los test unitarios en el contedor docker
-  Run:
-
-```ruby
-  $ docker-compose run web bundle exec rspec spec
-  # spec es la carpeta que contiene los tests, podemos correr toda la carpeta o el test particular que necesitemos probar
-```
+## Contacto
+Para soporte o preguntas, por favor contáctanos a través de ctrlfleet@gmail.com.
