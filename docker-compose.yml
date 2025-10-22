@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: bundle exec rails s -b '0.0.0.0'
+    container_name: ctrlfleet-backend-web
+    depends_on:
+      - db
+    ports:
+      - 3700:3700
+    volumes:
+      - .:/ctrlfleet-backend
+      - ctrlfleet_gem_cache:/ctrlfleet-backend/vendor/bundle
+    env_file:
+      - .env.dev
+      - .env.dev.local
+    environment:
+      RAILS_ENV: development
+      BUNDLE_PATH: /ctrlfleet-backend/vendor/bundle
+      PORT: 3700
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  db:
+    image: postgres:13.10-alpine
+    restart: always
+    container_name: ctrlfleet-backend-db
+    env_file:
+      - .env.dev
+      - .env.dev.local
+    environment:
+      POSTGRES_DB: ctrlfleet_backend_development
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  ctrlfleet_gem_cache:
+  db_data:
