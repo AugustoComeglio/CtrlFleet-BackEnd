@@ -1,0 +1,22 @@
+es:
+  already_exists_object_with_name: 'Ya existe %{class} con el nombre ingresado'
+  already_exists_vehicle_with_license_plate: 'Ya existe Vehiculo con la patente ingresada'
+  confirmation_instructions_subject: CtrlFleet | Confirmacion de cuenta
+  debate_was_destroyed_successfully: Debate eliminado con exito
+  dni_field_is_required: Campo DNI es oblligatorio
+  dni_already_exists: DNI ya registrado
+  dni_invalid: DNI Invalido
+  dni_too_many_long: DNI demasiado largo. Maximo 8 caracteres
+  license_plate_too_many_long: Patente demasiada larga. Maximo 8 caracteres
+  email_already_exists: Correo electronico ya registrado
+  email_field_is_required: Campo Email es oblligatorio
+  field_is_required: Campo oblligatorio
+  first_name_or_last_name_invalid: Nombres o Apellidos invalidos
+  license_plate_field_is_required: Campo Patente es oblligatorio
+  name_field_is_required: Campo Nombre es oblligatorio
+  notification_email_subject: CtrlFleet | Recibiste una notificación nueva
+  should_be_only_integer: Solo se permiten numeros
+  should_be_only_letter: Solo se permiten letras
+  reset_password_instructions_subject: CtrlFleet | Instrucciones para recuperar contraseña
+  ctrlfleet:
+    hello: Hola Mundo

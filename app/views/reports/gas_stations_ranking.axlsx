@@ -1,0 +1,53 @@
+# encoding: utf-8
+
+wb = xlsx_package.workbook
+
+date_begin = date_range.to_s.split('..').first.to_date.strftime('%d/%m/%Y')
+date_end = date_range.to_s.split('..').last.to_date.strftime('%d/%m/%Y')
+img = File.expand_path(Rails.root+'app/assets/images/report_logo.png')
+
+wb.add_worksheet(name: 'Ranking de Estaciones') do |sheet|
+  # Add logo && title && date_range
+  sheet.add_image(image_src: img, noMove: true) do |image|
+    image.width = 200
+    image.height = 100
+    image.start_at 0, 0
+  end
+
+  sheet.add_row []
+  sheet.add_row []
+  sheet.add_row ['',"Reporte de Ranking de Estaciones de Servicio mas utilizadas desde #{date_begin} hasta #{date_end}"]
+  sheet.add_row []
+  sheet.add_row []
+  
+  # Add headers
+  sheet.add_row []
+  sheet.add_row ["Nombre", "Cantidad de registros de combustibles", "Fecha ultimo registro"]
+
+  # Add rows
+  records.each do |gas_station|
+    sheet.add_row [
+      gas_station.nombre,
+      gas_station.cantidad_de_registros_de_combustibles,
+      gas_station.fecha_ultimo_registro
+    ]
+  end
+
+  # Add report generation date
+  sheet.add_row []
+  sheet.add_row []
+  sheet.add_row ["Fecha generacion de reporte: #{Time.zone.now.strftime('%d/%m/%Y %H:%M:%S')}"]
+
+  # Assets for Title
+  bold     = { b: true }
+  font     = { sz: 20 }
+  centered = { alignment: { horizontal: :center } }
+  bg_grey  = { bg_color: 'F0D86C' }
+  col_widths = [27,27,27]
+
+  sheet.add_style 'B3', bold, font
+  sheet.add_style 'A7:C7', bold, centered, bg_grey
+  sheet.merge_cells 'B3:F3'
+  sheet.merge_cells 'A1:A5'
+  sheet.column_widths *col_widths
+end

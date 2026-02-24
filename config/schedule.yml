@@ -1,0 +1,11 @@
+# version: 1
+# cron:
+#   - name: check-and-notificate-expires-to-documents
+#     url: /api/v2/expire_documents
+#     # schedule: 0 3 * * * # At 03:00 every day.
+#     schedule: '* * * * *'
+
+
+check-and-notificate-expires-to-documents:
+  cron: '* * * * *'
+  class: ExpireDocumentsWorker

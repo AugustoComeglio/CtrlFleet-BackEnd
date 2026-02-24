@@ -1,0 +1,111 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: bundle exec rails s -b '0.0.0.0'
+    container_name: ctrlfleet-backend-web
+    depends_on:
+      - db
+    ports:
+      - 3700:3700
+    volumes:
+      - .:/ctrlfleet-backend
+      - ctrlfleet_gem_cache:/ctrlfleet-backend/vendor/bundle
+    env_file:
+      - .env.dev
+      - .env.dev.local
+    environment:
+      RAILS_ENV: development
+      BUNDLE_PATH: /ctrlfleet-backend/vendor/bundle
+      PORT: 3700
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      REDIS_URL: redis://redis:6379
+      REDIS_HOST: redis
+      MAILCATCHER_HOST: mailcatcher
+  db:
+    image: postgres:13.10-alpine
+    restart: always
+    container_name: ctrlfleet-backend-db
+    env_file:
+      - .env.dev
+      - .env.dev.local
+    environment:
+      POSTGRES_DB: ctrlfleet_backend_development
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+  redis:
+    image: "redis:7-alpine"
+    command: redis-server
+    volumes:
+    - redis_data:/var/lib/redis/data
+    ports:
+      - "6379:6379"
+  sidekiq:
+    build: .
+    environment:
+      DATABASE_HOST: postgres
+      REDIS_URL: redis://redis:6379/1
+      REDIS_HOST: redis
+      MAILCATCHER_HOST: mailcatcher
+    depends_on:
+      - db
+      - redis
+    tmpfs:
+      - /ctrlfleet-backend/tmp
+      - /ctrlfleet-backend/log
+    command: bundle exec sidekiq
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/ctrlfleet-backend
+      - box_data:/box
+  # anycable-go:
+  #   image: 'anycable/anycable-go'
+  #   command: anycable-go --port 3334
+  #   environment:
+  #     REDIS_URL: redis://redis:6379
+  #     REDIS_HOST: redis
+  #   depends_on:
+  #     - redis
+  #   ports:
+  #     - '3334:3334'
+  # anycable-server:
+  #   build: .
+  #   command: bundle exec anycable
+  #   container_name: ctrlfleet-backend-anycable
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 3700:3700
+  #   volumes:
+  #     - .:/ctrlfleet-backend
+  #     - ctrlfleet_gem_cache:/ctrlfleet-backend/vendor/bundle
+  #   env_file:
+  #     - .env.dev
+  #     - .env.dev.local
+  #   environment:
+  #     RAILS_ENV: development
+  #     BUNDLE_PATH: /ctrlfleet-backend/vendor/bundle
+  #     PORT: 3700
+  #     POSTGRES_HOST: db
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     REDIS_URL: redis://redis:6379
+  #     REDIS_HOST: redis
+  #     MAILCATCHER_HOST: mailcatcher
+
+volumes:
+  ctrlfleet_gem_cache:
+  db_data:
+  redis_data:
+  box_data:

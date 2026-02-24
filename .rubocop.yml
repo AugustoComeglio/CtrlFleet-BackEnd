@@ -1,0 +1,33 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+Performance/Size:
+  Exclude:
+    - lib/example.rb
+Rails/FindBy:
+  Exclude:
+    - lib/example.rb
+RSpec/FilePath:
+  Exclude:
+    - spec/my_poorly_named_spec_file.rb
+
+AllCops:
+  TargetRubyVersion: 3.2
+  TargetRailsVersion: 7.1
+
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - bin/**/*
+    - contrib/**/*
+    - config/**/*
+    - db/**/*
+    - tmp/**/*
+    - Capfile
+    - Gemfile
+    - Rakefile
+
+Documentation:
+  Enabled: false

@@ -1,0 +1,45 @@
+<table align="center" cellpadding="0" cellspacing="0" width="100%" bgColor="#ffffff" style="padding: 40px 20px 40px 20px; border-radius: 5px;">
+  <tr>
+    <td>
+      <table align="center" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <% user_name = if @user.try(:full_name).present? %>
+          <% @user.try(:full_name) %>
+        <% else %>
+          <% @user.try(:email) %>
+        <% end %>
+        <tr><td style="font-size: 18px;">Hola <%= user_name %>!<br></td></tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr><td style="font-size: 14px;">Recibiste una notificacion nueva:</td></tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr>
+          <td>
+            <table align="center" cellpadding="0" cellspacing="0" width="100%" bgColor='#c0c0c0'
+              style="color: black; font-size: 24px; border-collapse: collapse; border-radius: 5px;">
+              <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+              <tr>
+                <td width="5" style="font-size: 0; line-height: 0;">&nbsp;</td>
+                <td>
+                  <%= @title %><br>
+                  <%= @subtitle %><br>
+                </td>
+                <td width="5" style="font-size: 0; line-height: 0;">&nbsp;</td>
+              </tr>
+              <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+            </table>
+          </td>
+        </tr><br>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr><td style="font-size: 14px;">Haga clic en el siguiente enlace para ver mas detalle:</td></tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr><td style="font-size: 14px;"><%= link_to nil, @notification_url %></td></tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr>
+          <td style="font-size: 14px;">
+            Si la URL anterior no funciona, intente copiarla y pegarla en su navegador.<br>
+            Si continúa teniendo problemas, no dude en contactarnos.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

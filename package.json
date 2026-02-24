@@ -1,0 +1,11 @@
+{
+  "name": "ctrlfleet-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@jonyricci-github.com:CtrlFleet2023/ctrlfleet-backend.git",
+  "author": "Jony Ricci <jonyricci@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.7.1"
+  }
+}

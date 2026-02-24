@@ -1,0 +1,63 @@
+<table align="center" cellpadding="0" cellspacing="0" width="100%" bgColor="#ffffff" style="padding: 40px 20px 40px 20px; border-radius: 5px;">
+  <tr>
+    <td>
+      <table align="center" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <% user_name = if @user.try(:full_name).present? %>
+          <% @user.try(:full_name) %>
+        <% else %>
+          <% @user.try(:email) %>
+        <% end %>
+
+        <tr><td style="font-size: 18px;"><strong>Hola <%= user_name %>!</strong><br></td></tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr>
+          <td style="font-size: 14px;">
+            Realizaste una solicitud para descargar el informe:<br>
+            <br>
+            <strong>"<%= @filename.split('.').first.titleize.split(' ')[..-3].join(' ') %>"</strong> desde: <strong><%= @date_range&.split('..')&.first&.to_date&.strftime("%d/%m/%Y") %></strong> - hasta: <strong><%= @date_range&.split('..')&.last&.to_date&.strftime("%d/%m/%Y") %></strong><br>
+            <br>
+            A continuación podras descargar el reporte solicitado a traves del siguiente link: <br>
+          </td>
+        </tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr>
+          <td align="center" style="font-size: 14px;">
+            <%#= link_to "Descargar Reporte", @public_url %>
+            <%= link_to @public_url do %>
+              <button type="button" class="login-button">Descargar Reporte</button>
+            <% end %>
+          </td>
+        </tr>
+        <tr><td height="15" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+        <tr>
+          <td style="font-size: 14px;">
+            <p>En caso de no poder descargar el archivo. Reintetelo nuevamente.</p>
+            <%# <p>En caso de no poder descargar el archivo. Copiar el siguiente texto y colocarlo en la URL de su navegador:</p> %>
+            <p><%#= @public_url %></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="font-size: 14px;">¡Saludos, que tengas un buen día!</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<style>
+  .login-button {
+    background-color: #F0D86C;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.078125rem;
+    border: none;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    height: 45px;
+    cursor: pointer;
+    width: 250px;
+  }
+</style>
