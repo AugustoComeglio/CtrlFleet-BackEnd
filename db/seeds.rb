@@ -7,6 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-# load 'db/seeds/brands_and_models.rb'
+load 'db/seeds/brands_and_models.rb'
 load 'db/seeds/permissions.rb'
-# load 'db/seeds/types_and_states.rb'
+load 'db/seeds/types_and_states.rb'

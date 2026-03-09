@@ -75,7 +75,7 @@ gem 'cancancan', '~> 3.0'
 
 # gem 'grpc', '~> 1.59', '>= 1.59.2'
 # gem 'grpc-tools', '0.14.1.pre1'
-# gem 'anycable-rails'
+gem 'anycable-rails'
 gem 'redis', '>= 4.0'
 
 gem "aws-sdk-s3", require: false

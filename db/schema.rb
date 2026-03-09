@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
     t.bigint "vehicle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "url"
     t.datetime "deleted_at"
+    t.string "url"
     t.datetime "expires_in"
     t.bigint "failure_id"
     t.index ["deleted_at"], name: "index_documents_on_deleted_at"
@@ -103,9 +103,9 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
     t.bigint "unit_id"
     t.datetime "created_at"
     t.bigint "gas_station_id"
-    t.datetime "registered_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.datetime "registered_at"
     t.bigint "fuel_type_id"
     t.index ["deleted_at"], name: "index_fuel_records_on_deleted_at"
     t.index ["fuel_type_id"], name: "index_fuel_records_on_fuel_type_id"
@@ -116,9 +116,9 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
 
   create_table "fuel_types", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_fuel_types_on_deleted_at"
   end
 
@@ -241,9 +241,12 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
     t.bigint "user_id"
     t.datetime "viewed_at"
     t.datetime "created_at"
+    t.datetime "deleted_at"
+    t.datetime "updated_at"
     t.string "title"
     t.integer "record_id"
     t.string "record_type"
+    t.index ["deleted_at"], name: "index_notifications_on_deleted_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -449,6 +452,7 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string "license_plate", null: false
+    t.string "initial_kms"
     t.integer "production_year"
     t.string "color"
     t.bigint "vehicle_type_id"
@@ -463,7 +467,6 @@ ActiveRecord::Schema[7.2].define(version: 2023_11_06_223205) do
     t.float "tank_capacity"
     t.bigint "fleet_id"
     t.datetime "deleted_at"
-    t.string "initial_kms"
     t.index ["brand_id"], name: "index_vehicles_on_brand_id"
     t.index ["deleted_at"], name: "index_vehicles_on_deleted_at"
     t.index ["fleet_id"], name: "index_vehicles_on_fleet_id"
